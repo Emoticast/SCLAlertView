@@ -27,6 +27,9 @@
 @property (nonatomic, strong) NSMutableArray *buttons;
 @property (nonatomic, strong) UIImageView *circleIconImageView;
 @property (nonatomic, strong) UIView *circleView;
+
+@property (nonatomic, strong) UIImageView *ting_logo;
+
 @property (nonatomic, strong) UIView *circleViewBackground;
 @property (nonatomic, strong) UIView *contentView;
 @property (nonatomic, strong) UIImageView *backgroundView;
@@ -61,6 +64,10 @@ CGFloat kCircleHeight;
 CGFloat kCircleTopPosition;
 CGFloat kCircleBackgroundTopPosition;
 CGFloat kCircleHeightBackground;
+
+CGFloat kTingLogoHeight;
+CGFloat kTingLogoWidth;
+
 CGFloat kActivityIndicatorHeight;
 CGFloat kTitleTop;
 CGFloat kTitleHeight;
@@ -82,6 +89,10 @@ NSTimer *durationTimer;
     self = [super init];
     if (self)
     {
+        
+        kTingLogoHeight = 30.0f;
+        kTingLogoWidth = 80.0f;
+        
         // Default values
         kCircleTopPosition = -12.0f;
         kCircleBackgroundTopPosition = -15.0f;
@@ -119,6 +130,11 @@ NSTimer *durationTimer;
         _viewText = [[UITextView alloc] init];
         _contentView = [[UIView alloc] init];
         _circleView = [[UIView alloc] init];
+        
+        _ting_logo = [[UIImageView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, kTingLogoWidth, kTingLogoHeight)];
+        _ting_logo.image = [UIImage imageNamed:@"ting_logo"];
+        _ting_logo.contentMode = UIViewContentModeScaleAspectFit;
+        
         _circleViewBackground = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kCircleHeightBackground, kCircleHeightBackground)];
         _circleIconImageView = [[UIImageView alloc] init];
         _backgroundView = [[UIImageView alloc]initWithFrame:[self mainScreenFrame]];
@@ -126,9 +142,10 @@ NSTimer *durationTimer;
         _inputs = [[NSMutableArray alloc] init];
         
         // Add Subviews
-        [self.view addSubview:_contentView];
-        [self.view addSubview:_circleViewBackground];
         
+        [self.view addSubview:_contentView];
+        //[self.view addSubview:_circleViewBackground];
+        [self.view addSubview:_ting_logo];
         // Background View
         _backgroundView.userInteractionEnabled = YES;
         
@@ -145,6 +162,8 @@ NSTimer *durationTimer;
         _circleViewBackground.layer.cornerRadius = _circleViewBackground.frame.size.height / 2;
         CGFloat x = (kCircleHeightBackground - kCircleHeight) / 2;
         _circleView.frame = CGRectMake(x, x, kCircleHeight, kCircleHeight);
+        _ting_logo.frame = CGRectMake(x, x, kCircleHeight, kCircleHeight);
+
         _circleView.layer.cornerRadius = _circleView.frame.size.height / 2;
         x = (kCircleHeight - _circleIconHeight) / 2;
         _circleIconImageView.frame = CGRectMake(x, x, _circleIconHeight, _circleIconHeight);
@@ -273,6 +292,8 @@ NSTimer *durationTimer;
         self.view.frame = r;
         _contentView.frame = CGRectMake(0.0f, kCircleHeight / 4, _windowWidth, _windowHeight);
         _circleViewBackground.frame = CGRectMake(_windowWidth / 2 - kCircleHeightBackground / 2, kCircleBackgroundTopPosition, kCircleHeightBackground, kCircleHeightBackground);
+        _ting_logo.frame = CGRectMake(_windowWidth / 2 - kCircleHeightBackground / 2, kCircleBackgroundTopPosition, kCircleHeightBackground, kCircleHeightBackground);
+
         _circleIconImageView.frame = CGRectMake(kCircleHeight / 2 - _circleIconHeight / 2, kCircleHeight / 2 - _circleIconHeight / 2, _circleIconHeight, _circleIconHeight);
     }
     else
@@ -356,10 +377,10 @@ NSTimer *durationTimer;
     // Disable iOS 7 back gesture
     if ([navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)])
     {
-        _restoreInteractivePopGestureEnabled = navigationController.interactivePopGestureRecognizer.enabled;
+       /* _restoreInteractivePopGestureEnabled = navigationController.interactivePopGestureRecognizer.enabled;
         _restoreInteractivePopGestureDelegate = navigationController.interactivePopGestureRecognizer.delegate;
         navigationController.interactivePopGestureRecognizer.enabled = NO;
-        navigationController.interactivePopGestureRecognizer.delegate = self;
+        navigationController.interactivePopGestureRecognizer.delegate = self;*/
     }
 }
 
